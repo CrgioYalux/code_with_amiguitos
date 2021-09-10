@@ -1,0 +1,39 @@
+:root {
+	--woodsmoke: #151718;
+	--silver-sand: #bcc1c5;
+	--port-gore: #272042;
+	--cold-purple: #a99eda;
+	--jacarta: #32275f;
+	--cod-gray: #161616;
+	--loblolly: #c5cace;
+	--mine-shaft: #232323;
+	--cinder: #1a1523;
+	--blue-400: #60a5fa;
+	--blue-500: #3b82f6;
+	--blue-600: #2563eb;
+	--blue-700: #1d4ed8;
+	--blue-800: #1e40af;
+	--green-600: #059669;
+	--green-400: #34d399;
+	--green-800: #065f46;
+	--yellow-800: #92400e;
+	--yellow-600: #d97706;
+	--indigo-800: #3730a3;
+	--indigo-600: #4f46e5;
+}
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}

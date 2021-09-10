@@ -1,0 +1,84 @@
+.room_info_container {
+	height: 15vh;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--silver-sand);
+	padding: 5px 10px;
+	margin-top: 10px;
+}
+
+.room_info_id_container {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+}
+
+.room_info_id_container > p {
+	font-weight: 600;
+	color: var(--cod-gray);
+}
+
+.room_info_id {
+	position: relative;
+	cursor: pointer;
+	color: var(--silver-sand);
+	background-color: var(--cod-gray);
+	padding: 2px 10px;
+	margin-left: 5px;
+	border-radius: 9px;
+	transition: background-color 0.1s;
+	text-align: center;
+	display: inline-block;
+	min-width: 200px;
+}
+
+.room_info_id:hover {
+	background-color: var(--mine-shaft);
+}
+
+.copy_id_animation {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	overflow: hidden;
+	border-radius: 9px;
+}
+
+.copy_id_animation::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background-color: var(--blue-600);
+	border-radius: 9px;
+	opacity: 0.5;
+	animation: copied 0.4s;
+}
+
+@keyframes copied {
+	0% {
+		left: -100%;
+	}
+	100% {
+		left: 0;
+	}
+}
+
+.room_info_id:hover > .clipboard-icon {
+	display: block;
+}
+
+.clipboard-icon {
+	font-size: 1.1rem;
+	position: absolute;
+	right: -5px;
+	bottom: -7px;
+	color: var(--blue-600);
+	display: none;
+}
