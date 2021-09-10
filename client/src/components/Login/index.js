@@ -1,47 +1,94 @@
 import './Login.css';
-import { useRef } from "react";
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-export const Login = ({ onIdSubmit }) => {
-  const inputIDRef = useRef(null);
-  const inputUsernameRef = useRef(null);
-  
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onIdSubmit({
-      roomID: inputIDRef.current.value,
-      username: inputUsernameRef.current.value
-    });
-  };
+export const Login = ({ onSubmit }) => {
+	const [roomID, setRoomID] = useState('');
+	const [username, setUsername] = useState('');
 
-  const createNewID = () => {
-    inputIDRef.current.value = uuidv4();
-    if (inputUsernameRef.current.value) {
-      onIdSubmit({
-        roomID: inputIDRef.current.value,
-        username: inputUsernameRef.current.value
-      });
-    } else {
-      inputUsernameRef.current.focus();
-    }
-  };
+	const handleChangeRoomID = (event) => {
+		setRoomID(event.target.value.trim());
+	};
 
-  return (
-    <div className="login_container">
-      <form onSubmit={handleSubmit} className="form_container">
-        <div className="form_field form_field_username">
-          <label className="form_label form_label_username">Username:</label>
-          <input name="username" className="form_input form_input_username" type="text" ref={inputUsernameRef} placeholder="Enter your username" required/>
-        </div>
-        <div className="form_field form_field_room">
-          <label name="room_id" className="form_label form_label_room">Room ID:</label>
-          <input className="form_input form_input_room" type="text" ref={inputIDRef} placeholder="Enter the room's ID" required/>
-        </div>
-        <div className="buttons_container">
-          <input type="submit" className="button button_submit" value="Go with this"/>
-          <button type="button" className="button button_create" onClick={createNewID}>Random ID</button>
-        </div>
-      </form>
-    </div>
-  );
+	const handleChangeUsername = (event) => {
+		setUsername(event.target.value.trim());
+	};
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		formIsReady &&
+			onSubmit.setLoginData({
+				roomID,
+				username,
+			});
+	};
+
+	const createNewID = (event) => {
+		setRoomID(uuidv4());
+		if (!validUsername) event.target.form.elements.username.focus();
+	};
+
+	const statusLength = `${10 - username.length}/10`;
+	const validUsername = username && username.length <= 10;
+	const formIsReady = validUsername && roomID;
+
+	return (
+		<div className="login_container">
+			<form onSubmit={handleSubmit} className="form_container">
+				<div className="form_field">
+					<label htmlFor="username" className="form_label">
+						Username:
+					</label>
+					<input
+						name="username"
+						id="username"
+						value={username}
+						onChange={handleChangeUsername}
+						className="form_input"
+						type="text"
+						placeholder="Enter your username"
+						required
+					/>
+					<div
+						className={`input_length ${
+							validUsername ? 'input_length-valid' : 'input_length-invalid'
+						}`}
+					>
+						{statusLength}
+					</div>
+				</div>
+				<div className="form_field">
+					<label htmlFor="roomID" className="form_label">
+						Room ID:
+					</label>
+					<input
+						name="roomID"
+						id="roomID"
+						value={roomID}
+						onChange={handleChangeRoomID}
+						className="form_input"
+						type="text"
+						placeholder="Enter the room's ID"
+						required
+					/>
+				</div>
+				<div className="buttons_container">
+					<input
+						type="submit"
+						className={`button button_submit ${
+							formIsReady ? 'button-enabled' : 'button-disabled'
+						}`}
+						value="Join room"
+					/>
+					<button
+						type="button"
+						className="button button_create"
+						onClick={createNewID}
+					>
+						Random ID
+					</button>
+				</div>
+			</form>
+		</div>
+	);
 };

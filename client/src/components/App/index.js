@@ -9,7 +9,7 @@ const path = '/socket/';
 
 const App = () => {
 	const [loginData, setLoginData] = useState(null);
-	if (!loginData) return <Login onIdSubmit={setLoginData} />;
+	if (!loginData) return <Login onSubmit={{ setLoginData }} />;
 	return (
 		<ClientProvider login={loginData}>
 			<SocketProvider path={path}>

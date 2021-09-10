@@ -31,6 +31,13 @@
 	text-align: center;
 	display: inline-block;
 	min-width: 200px;
+	max-width: 400px;
+}
+
+.room_info_id > p {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow-x: hidden;
 }
 
 .room_info_id:hover {
@@ -75,8 +82,8 @@
 }
 
 .clipboard-icon {
-	font-size: 1.1rem;
 	position: absolute;
+	font-size: 1.1rem;
 	right: -5px;
 	bottom: -7px;
 	color: var(--blue-600);
