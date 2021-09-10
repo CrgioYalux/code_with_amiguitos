@@ -2,29 +2,35 @@
 	align-self: center;
 	padding-left: 30px;
 	margin: auto;
+	display: flex;
+	flex-direction: row;
 }
 
-.client {
+.connected_clients_container > div {
 	position: relative;
-	display: inline-grid;
-	place-items: center;
-	background-color: var(--woodsmoke);
-	box-shadow: inset 2px 2px 5px 2px rgba(0, 0, 0, 1);
-	color: var(--blue-600);
-	font-size: 1rem;
-	font-weight: 600;
-	width: 40px;
-	height: 40px;
-	border: 2px solid var(--blue-800);
-	border-radius: 50%;
-	cursor: pointer;
-	user-select: none;
-	transition: 0.5s all;
-}
-.client:hover {
-	width: 100px;
-	border-radius: 16px;
-	margin-right: 8px;
 	background-color: var(--cod-gray);
-	box-shadow: inset 0px 2px 5px 2px rgba(0, 0, 0, 1);
+}
+
+.connected_clients_container > div:nth-child(1) {
+	right: 0px;
+	border-color: var(--blue-800);
+	color: var(--blue-600);
+}
+
+.connected_clients_container > div:nth-child(2) {
+	right: 10px;
+	border-color: var(--green-800);
+	color: var(--green-600);
+}
+
+.connected_clients_container > div:nth-child(3) {
+	right: 20px;
+	border-color: var(--yellow-800);
+	color: var(--yellow-600);
+}
+
+.connected_clients_container > div:nth-child(4) {
+	right: 30px;
+	border-color: var(--indigo-800);
+	color: var(--indigo-600);
 }
