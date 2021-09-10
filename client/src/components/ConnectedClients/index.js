@@ -1,14 +1,8 @@
 import './ConnectedClients.css';
-// import { useSocket } from '../../providers/SocketProvider';
+import { useSocket } from '../../providers/SocketProvider';
 const colors = ['blue', 'green', 'yellow', 'indigo'];
 export const ConnectedClients = () => {
-	// const { connectedClients } = useSocket();
-	const connectedClients = [
-		{ username: 'Pabloe' },
-		{ username: 'Crgio' },
-		{ username: 'Carl' },
-		{ username: 'Marcs' },
-	];
+	const { connectedClients } = useSocket();
 	return (
 		<div className="connected_clients_container">
 			{connectedClients.map((client, index) => (
