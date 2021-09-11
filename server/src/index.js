@@ -1,23 +1,24 @@
 const { log } = console;
 const cors = require('cors');
 const path = require('path');
-
-const PORT = process.env.PORT || 4000;
-const clients = new Set();
-
+const http = require('http');
 const express = require('express');
+const { Server } = require('socket.io');
+const { deleteClient, getRoomClients } = require('./utils/client');
+
 const app = express();
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', '..', 'client', 'build')));
 
-const server = require('http').createServer(app);
+const server = http.createServer(app);
 
-const { Server } = require('socket.io');
 const io = new Server(server, {
 	path: '/socket/',
 	serveClient: false,
 });
+
+const clients = new Set();
 
 io.on('connection', (socket) => {
 	let numClients = clients.size;
@@ -50,31 +51,20 @@ io.on('connection', (socket) => {
 });
 
 const sendConnectedClients = ({ io, client, clients }) => {
-	const roomClients = getRoomClients({ client, clients });
+	const roomClients = getRoomClients({
+		roomID: client.connectedToRoom,
+		clients,
+	});
+	const onlyClientsUsernames = roomClients.map((c) => {
+		return { username: c.username };
+	});
 	io.to(client.connectedToRoom).emit(
 		'send-connected-clients',
-		JSON.stringify({ clients: roomClients }),
+		JSON.stringify({ clients: onlyClientsUsernames }),
 	);
 };
 
-const getRoomClients = ({ client, clients }) => {
-	const roomClients = [];
-	for (let c of clients) {
-		if (c.connectedToRoom === client.connectedToRoom) {
-			roomClients.push({ username: c.username });
-		}
-	}
-	return roomClients;
-};
-
-const deleteClient = ({ client, clients }) => {
-	for (let c of clients) {
-		if (c.socket === client.socket) {
-			clients.delete(c);
-		}
-	}
-};
-
+const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
 	log(`Server listening on port ${PORT}`);
 });
