@@ -1,8 +1,9 @@
 import './Login.css';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { LOGIN_FAILED, LOGIN_LOADING } from './states';
 
-export const Login = ({ onSubmit }) => {
+export const Login = ({ onSubmit, state }) => {
 	const [roomID, setRoomID] = useState('');
 	const [username, setUsername] = useState('');
 
@@ -21,6 +22,7 @@ export const Login = ({ onSubmit }) => {
 				roomID,
 				username,
 			});
+		onSubmit.setLoginState(LOGIN_LOADING);
 	};
 
 	const createNewID = (event) => {
@@ -89,6 +91,7 @@ export const Login = ({ onSubmit }) => {
 					</button>
 				</div>
 			</form>
+			<p>{state === LOGIN_FAILED ? <strong>Hubo un quilombo</strong> : null}</p>
 		</div>
 	);
 };

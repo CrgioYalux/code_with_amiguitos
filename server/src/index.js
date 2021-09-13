@@ -4,7 +4,12 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const { Server } = require('socket.io');
-const { deleteClient, getRoomClients } = require('./utils/client');
+const {
+	manageNewConnectionToRoom,
+	deleteClientFromRoom,
+	sendConnectedClients,
+	RoomState,
+} = require('./utils/room');
 
 const app = express();
 app.use(cors({ origin: '*' }));
@@ -18,51 +23,37 @@ const io = new Server(server, {
 	serveClient: false,
 });
 
-const clients = new Set();
+const rooms = new Map();
 
 io.on('connection', (socket) => {
-	let numClients = clients.size;
-
-	const { username, connectedToRoom } = socket.handshake.query;
-
+	const { username, roomID } = JSON.parse(socket.handshake.query.login);
 	const client = {
 		username,
-		connectedToRoom,
 		socket,
 	};
 
-	clients.add(client);
-
-	if (numClients !== clients.size) {
-		socket.join(client.connectedToRoom);
-		sendConnectedClients({ io, client, clients });
-		log(`Someone connected. Users online: ${clients.size}`);
+	const newConnectionToRoom = manageNewConnectionToRoom({
+		capacity: 4,
+		client,
+		rooms,
+		roomID,
+		socket,
+	});
+	if (newConnectionToRoom) {
+		sendConnectedClients({ io, rooms, roomID });
+		log(`Someone connected:\n${RoomState({ rooms, roomID })}.`);
 	}
 
 	socket.on('send-data', (data) => {
-		socket.broadcast.to(client.connectedToRoom).emit('receive-data', data);
+		socket.broadcast.to(roomID).emit('receive-data', data);
 	});
 
 	socket.on('disconnect', () => {
-		deleteClient({ client, clients });
-		sendConnectedClients({ io, client, clients });
-		log(`Someone disconnected. Users online: ${clients.size}`);
+		deleteClientFromRoom({ client, rooms, roomID });
+		sendConnectedClients({ io, rooms, roomID });
+		log(`Someone disconnected:\n${RoomState({ rooms, roomID })}.`);
 	});
 });
-
-const sendConnectedClients = ({ io, client, clients }) => {
-	const roomClients = getRoomClients({
-		roomID: client.connectedToRoom,
-		clients,
-	});
-	const onlyClientsUsernames = roomClients.map((c) => {
-		return { username: c.username };
-	});
-	io.to(client.connectedToRoom).emit(
-		'send-connected-clients',
-		JSON.stringify({ clients: onlyClientsUsernames }),
-	);
-};
 
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
