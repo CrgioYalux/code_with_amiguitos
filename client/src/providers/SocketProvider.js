@@ -1,6 +1,10 @@
 import { useContext, createContext, useState, useEffect } from 'react';
 import { useClient } from './ClientProvider';
-import { LOGIN_FAILED, LOGIN_OK } from '../components/Login/states';
+import {
+	LOGIN_FAILED_CANNOT_CONNECT,
+	LOGIN_FAILED_ROOM_FULL,
+	LOGIN_OK,
+} from '../components/Login/states';
 import io from 'socket.io-client';
 
 const SocketContext = createContext(null);
@@ -28,6 +32,14 @@ export const SocketProvider = ({ children, path, onLoginTry }) => {
 
 	useEffect(() => {
 		if (socket === null) return;
+		socket.on('connect_error', () => {
+			onLoginTry.setLoginState(LOGIN_FAILED_CANNOT_CONNECT);
+		});
+		return () => socket.off('connect_error');
+	});
+
+	useEffect(() => {
+		if (socket === null) return;
 		socket.on('send-connected-clients', (data) => {
 			const { clients } = JSON.parse(data);
 			setConnectedClients(clients);
@@ -43,7 +55,7 @@ export const SocketProvider = ({ children, path, onLoginTry }) => {
 				onLoginTry.setLoginState(LOGIN_OK);
 				setRoomSpacesLeft(space - 1);
 			} else {
-				onLoginTry.setLoginState(LOGIN_FAILED);
+				onLoginTry.setLoginState(LOGIN_FAILED_ROOM_FULL);
 			}
 		});
 		return () => socket.off('room-state');

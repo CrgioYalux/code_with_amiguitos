@@ -1,7 +1,11 @@
 import './Login.css';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { LOGIN_FAILED, LOGIN_LOADING } from './states';
+import {
+	LOGIN_FAILED_CANNOT_CONNECT,
+	LOGIN_FAILED_ROOM_FULL,
+	LOGIN_LOADING,
+} from './states';
 
 export const Login = ({ onSubmit, state }) => {
 	const [roomID, setRoomID] = useState('');
@@ -49,6 +53,7 @@ export const Login = ({ onSubmit, state }) => {
 						className="form_input"
 						type="text"
 						placeholder="Enter your username"
+						autoFocus
 						required
 					/>
 					<div
@@ -91,7 +96,14 @@ export const Login = ({ onSubmit, state }) => {
 					</button>
 				</div>
 			</form>
-			<p>{state === LOGIN_FAILED ? <strong>Hubo un quilombo</strong> : null}</p>
+			{state === LOGIN_FAILED_ROOM_FULL && (
+				<p className="login_status_msg">
+					Couldn't enter the room because it's full.
+				</p>
+			)}
+			{state === LOGIN_FAILED_CANNOT_CONNECT && (
+				<p className="login_status_msg">Couldn't connect to the server.</p>
+			)}
 		</div>
 	);
 };
