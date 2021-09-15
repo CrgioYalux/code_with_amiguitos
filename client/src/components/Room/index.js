@@ -1,10 +1,10 @@
-import './Editor.css';
+import './Room.css';
 import { useEffect, useState } from 'react';
 import { useSocket } from '../../providers/SocketProvider';
 import { useClient } from '../../providers/ClientProvider';
 import { RoomInfo } from '../RoomInfo';
 
-export const Editor = () => {
+export const Room = () => {
 	const [code, setCode] = useState('');
 	const { socket } = useSocket();
 	const { username } = useClient();

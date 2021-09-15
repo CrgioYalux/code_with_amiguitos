@@ -2,7 +2,7 @@ import './App.css';
 import { useState } from 'react';
 import { SocketProvider } from '../../providers/SocketProvider';
 import { ClientProvider } from '../../providers/ClientProvider';
-import { Editor } from '../Editor';
+import { Room } from '../Room';
 import { Login } from '../Login';
 import {
 	LOGIN_FAILED_CANNOT_CONNECT,
@@ -28,7 +28,7 @@ const App = () => {
 	return (
 		<ClientProvider login={loginData}>
 			<SocketProvider path={path} onLoginTry={{ setLoginState }}>
-				{loginState === LOGIN_OK && <Editor />}
+				{loginState === LOGIN_OK && <Room />}
 			</SocketProvider>
 		</ClientProvider>
 	);
