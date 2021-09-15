@@ -20,6 +20,9 @@
 	--yellow-600: #d97706;
 	--indigo-800: #3730a3;
 	--indigo-600: #4f46e5;
+	--editor-code: rgb(240, 240, 160);
+	--editor-html: rgb(220, 40, 75);
+	--editor-style: rgba(150, 200, 240, 1);
 }
 
 *,

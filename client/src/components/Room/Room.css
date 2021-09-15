@@ -6,3 +6,13 @@
 	align-items: center;
 	background-color: var(--woodsmoke);
 }
+
+.editors_container {
+	flex: 1 1 auto;
+	width: 100%;
+	display: grid;
+	gap: 5px;
+	padding: 5px;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+}

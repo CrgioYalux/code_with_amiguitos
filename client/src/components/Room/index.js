@@ -3,9 +3,12 @@ import { useEffect, useState } from 'react';
 import { useSocket } from '../../providers/SocketProvider';
 import { useClient } from '../../providers/ClientProvider';
 import { RoomInfo } from '../RoomInfo';
+import { Editor } from '../Editor';
 
 export const Room = () => {
 	const [code, setCode] = useState('');
+	const [html, setHTML] = useState('');
+	const [style, setStyle] = useState('');
 	const { socket } = useSocket();
 	const { username } = useClient();
 
@@ -45,7 +48,25 @@ export const Room = () => {
 		<>
 			<div className="room_container">
 				<RoomInfo />
-				<textarea value={code} onChange={handleChange} />
+				<div className="editors_container">
+					<Editor value={code} forEditing="code" handleChange={handleChange} />
+					<Editor
+						value={html}
+						forEditing="html"
+						handleChange={(e) => {
+							setHTML(e.target.value);
+							console.log(`HTML: ${e.target.value}`);
+						}}
+					/>
+					<Editor
+						value={style}
+						forEditing="style"
+						handleChange={(e) => {
+							setStyle(e.target.value);
+							console.log(`STYLE: ${e.target.value}`);
+						}}
+					/>
+				</div>
 			</div>
 		</>
 	);
