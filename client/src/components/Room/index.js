@@ -9,14 +9,14 @@ export const Room = () => {
 	const [code, setCode] = useState('');
 	const [html, setHTML] = useState('');
 	const [style, setStyle] = useState('');
-	const { socket } = useSocket();
+	const { socket, id } = useSocket();
 	const { username } = useClient();
 
 	useEffect(() => {
 		if (socket === null) return;
 		socket.on('receive-code-data', (data) => {
 			const parsedData = JSON.parse(data);
-			if (parsedData.from !== username) {
+			if (parsedData.from.id !== id) {
 				setCode(parsedData.data);
 			}
 		});
@@ -27,7 +27,7 @@ export const Room = () => {
 		if (socket === null) return;
 		socket.on('receive-style-data', (data) => {
 			const parsedData = JSON.parse(data);
-			if (parsedData.from !== username) {
+			if (parsedData.from.id !== id) {
 				setStyle(parsedData.data);
 			}
 		});
@@ -38,7 +38,7 @@ export const Room = () => {
 		if (socket === null) return;
 		socket.on('receive-html-data', (data) => {
 			const parsedData = JSON.parse(data);
-			if (parsedData.from !== username) {
+			if (parsedData.from.id !== id) {
 				setHTML(parsedData.data);
 			}
 		});
@@ -51,7 +51,7 @@ export const Room = () => {
 			if (code.length !== 0 || html.length !== 0 || style.length !== 0) {
 				socket.emit(
 					'send-uptodate-editor',
-					JSON.stringify({ code, html, style, from: username }),
+					JSON.stringify({ code, html, style, from: { username, id } }),
 				);
 			}
 		});
@@ -60,7 +60,7 @@ export const Room = () => {
 
 	const sendData = ({ type, data }) => {
 		const event = `send-${type}-data`;
-		socket.emit(event, JSON.stringify({ data, from: username }));
+		socket.emit(event, JSON.stringify({ data, from: { username, id } }));
 	};
 
 	return (

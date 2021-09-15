@@ -6,7 +6,7 @@ const RoomState = ({ rooms, roomID }) => {
 const sendConnectedClients = ({ io, rooms, roomID }) => {
 	const roomClients = rooms.get(roomID);
 	const onlyClientsUsernames = [...roomClients].map((c) => {
-		return { username: c.username };
+		return { username: c.username, id: c.socket.id };
 	});
 	io.to(roomID).emit(
 		'send-connected-clients',

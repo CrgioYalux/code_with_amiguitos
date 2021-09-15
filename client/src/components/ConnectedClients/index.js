@@ -6,7 +6,7 @@ export const ConnectedClients = () => {
 	return (
 		<div className="connected_clients_container">
 			{connectedClients.map((client) => (
-				<DisplayUsername key={client.username} username={client.username} />
+				<DisplayUsername key={client.id} username={client.username} />
 			))}
 		</div>
 	);

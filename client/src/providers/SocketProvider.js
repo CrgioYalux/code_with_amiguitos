@@ -16,6 +16,7 @@ export const SocketProvider = ({ children, path, onLoginTry }) => {
 	const [connectedClients, setConnectedClients] = useState([]);
 	const [roomSpacesLeft, setRoomSpacesLeft] = useState();
 	const [socket, setSocket] = useState(null);
+	const [socketID, setSocketID] = useState(null);
 
 	useEffect(() => {
 		const login = JSON.stringify({ username, roomID });
@@ -29,6 +30,14 @@ export const SocketProvider = ({ children, path, onLoginTry }) => {
 		setSocket(newSocket);
 		return () => newSocket.close();
 	}, [path, username, roomID]);
+
+	useEffect(() => {
+		if (socket === null) return;
+		socket.on('connect', () => {
+			setSocketID(socket.id);
+		});
+		return () => socket.off('connect');
+	});
 
 	useEffect(() => {
 		if (socket === null) return;
@@ -63,6 +72,7 @@ export const SocketProvider = ({ children, path, onLoginTry }) => {
 
 	const value = {
 		socket,
+		id: socketID,
 		connectedClients,
 		roomSpacesLeft,
 	};
