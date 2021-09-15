@@ -57,4 +57,5 @@ module.exports = {
 	sendConnectedClients,
 	deleteClientFromRoom,
 	manageNewConnectionToRoom,
+	getRoomNumOfClients,
 };

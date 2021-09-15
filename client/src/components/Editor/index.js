@@ -20,6 +20,19 @@ export const Editor = () => {
 		return () => socket.off('receive-data');
 	});
 
+	useEffect(() => {
+		if (socket === null) return;
+		socket.on('get-uptodate-editor', () => {
+			if (code.length !== 0) {
+				socket.emit(
+					'send-uptodate-editor',
+					JSON.stringify({ code, from: username }),
+				);
+			}
+		});
+		return () => socket.off('get-uptodate-editor');
+	});
+
 	const handleChange = (e) => {
 		setCode(e.target.value);
 		socket.emit(

@@ -10,6 +10,7 @@ const {
 	sendConnectedClients,
 	RoomState,
 } = require('./utils/room');
+const { sendUpToDateEditor } = require('./utils/editor');
 
 const app = express();
 app.use(cors({ origin: '*' }));
@@ -41,6 +42,7 @@ io.on('connection', (socket) => {
 	});
 	if (newConnectionToRoom) {
 		sendConnectedClients({ io, rooms, roomID });
+		sendUpToDateEditor({ socket, rooms, roomID });
 		log(`Someone connected:\n${RoomState({ rooms, roomID })}.`);
 	}
 
