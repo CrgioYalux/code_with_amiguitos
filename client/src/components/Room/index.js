@@ -14,34 +14,54 @@ export const Room = () => {
 
 	useEffect(() => {
 		if (socket === null) return;
-		socket.on('receive-data', (data) => {
+		socket.on('receive-code-data', (data) => {
 			const parsedData = JSON.parse(data);
+			console.log(parsedData);
 			if (parsedData.from !== username) {
-				setCode(parsedData.code);
+				setCode(parsedData.data);
 			}
 		});
-		return () => socket.off('receive-data');
+		return () => socket.off('receive-code-data');
+	});
+
+	useEffect(() => {
+		if (socket === null) return;
+		socket.on('receive-style-data', (data) => {
+			const parsedData = JSON.parse(data);
+			if (parsedData.from !== username) {
+				setStyle(parsedData.data);
+			}
+		});
+		return () => socket.off('receive-style-data');
+	});
+
+	useEffect(() => {
+		if (socket === null) return;
+		socket.on('receive-html-data', (data) => {
+			const parsedData = JSON.parse(data);
+			if (parsedData.from !== username) {
+				setHTML(parsedData.data);
+			}
+		});
+		return () => socket.off('receive-html-data');
 	});
 
 	useEffect(() => {
 		if (socket === null) return;
 		socket.on('get-uptodate-editor', () => {
-			if (code.length !== 0) {
+			if (code.length !== 0 || html.length !== 0 || style.length !== 0) {
 				socket.emit(
 					'send-uptodate-editor',
-					JSON.stringify({ code, from: username }),
+					JSON.stringify({ code, html, style, from: username }),
 				);
 			}
 		});
 		return () => socket.off('get-uptodate-editor');
 	});
 
-	const handleChange = (e) => {
-		setCode(e.target.value);
-		socket.emit(
-			'send-data',
-			JSON.stringify({ code: e.target.value, from: username }),
-		);
+	const sendData = ({ type, data }) => {
+		const event = `send-${type}-data`;
+		socket.emit(event, JSON.stringify({ data, from: username }));
 	};
 
 	return (
@@ -49,22 +69,23 @@ export const Room = () => {
 			<div className="room_container">
 				<RoomInfo />
 				<div className="editors_container">
-					<Editor value={code} forEditing="code" handleChange={handleChange} />
+					<Editor
+						value={code}
+						setValue={setCode}
+						forEditing="code"
+						onValueChange={{ sendData }}
+					/>
 					<Editor
 						value={html}
+						setValue={setHTML}
 						forEditing="html"
-						handleChange={(e) => {
-							setHTML(e.target.value);
-							console.log(`HTML: ${e.target.value}`);
-						}}
+						onValueChange={{ sendData }}
 					/>
 					<Editor
 						value={style}
+						setValue={setStyle}
 						forEditing="style"
-						handleChange={(e) => {
-							setStyle(e.target.value);
-							console.log(`STYLE: ${e.target.value}`);
-						}}
+						onValueChange={{ sendData }}
 					/>
 				</div>
 			</div>

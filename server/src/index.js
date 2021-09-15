@@ -46,8 +46,21 @@ io.on('connection', (socket) => {
 		log(`Someone connected:\n${RoomState({ rooms, roomID })}.`);
 	}
 
-	socket.on('send-data', (data) => {
-		socket.broadcast.to(roomID).emit('receive-data', data);
+	socket.on('send-code-data', (data) => {
+		console.log(data);
+		socket.broadcast.to(roomID).emit('receive-code-data', data);
+	});
+
+	socket.on('send-html-data', (data) => {
+		console.log(data);
+
+		socket.broadcast.to(roomID).emit('receive-html-data', data);
+	});
+
+	socket.on('send-style-data', (data) => {
+		console.log(data);
+
+		socket.broadcast.to(roomID).emit('receive-style-data', data);
 	});
 
 	socket.on('disconnect', () => {
