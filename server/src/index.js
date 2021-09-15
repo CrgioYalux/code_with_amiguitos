@@ -47,19 +47,14 @@ io.on('connection', (socket) => {
 	}
 
 	socket.on('send-code-data', (data) => {
-		console.log(data);
 		socket.broadcast.to(roomID).emit('receive-code-data', data);
 	});
 
 	socket.on('send-html-data', (data) => {
-		console.log(data);
-
 		socket.broadcast.to(roomID).emit('receive-html-data', data);
 	});
 
 	socket.on('send-style-data', (data) => {
-		console.log(data);
-
 		socket.broadcast.to(roomID).emit('receive-style-data', data);
 	});
 

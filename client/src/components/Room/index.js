@@ -16,7 +16,6 @@ export const Room = () => {
 		if (socket === null) return;
 		socket.on('receive-code-data', (data) => {
 			const parsedData = JSON.parse(data);
-			console.log(parsedData);
 			if (parsedData.from !== username) {
 				setCode(parsedData.data);
 			}
