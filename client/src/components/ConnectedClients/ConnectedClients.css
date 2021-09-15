@@ -1,14 +1,18 @@
 .connected_clients_container {
 	align-self: center;
-	padding-left: 30px;
 	margin: auto;
 	display: flex;
 	flex-direction: row;
+	padding-left: 15px;
 }
 
 .connected_clients_container > div {
 	position: relative;
 	background-color: var(--cod-gray);
+}
+
+.connected_clients_container > div:hover {
+	margin-right: 10px;
 }
 
 .connected_clients_container > div:nth-child(1) {

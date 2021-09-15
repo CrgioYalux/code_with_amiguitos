@@ -29,9 +29,9 @@
 
 .letter {
 	display: grid;
-	font-family: sans-serif;
 	place-items: center;
-	font-size: 1.2rem;
+	font-family: sans-serif;
+	font-size: 0.9rem;
 	font-weight: 600;
 }
 

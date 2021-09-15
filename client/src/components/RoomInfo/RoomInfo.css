@@ -1,11 +1,16 @@
 .room_info_container {
-	height: 15vh;
+	height: 12vh;
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	background-color: var(--silver-sand);
+
+	background: rgba(0, 0, 0, 0.35);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+
 	padding: 5px 10px;
 	margin-top: 10px;
+	border-radius: 9px;
+	gap: 5px;
 }
 
 .room_info_id_container {
@@ -16,7 +21,7 @@
 
 .room_info_id_container > p {
 	font-weight: 600;
-	color: var(--cod-gray);
+	color: var(--silver-sand);
 }
 
 .room_info_id {
@@ -32,6 +37,7 @@
 	display: inline-block;
 	min-width: 200px;
 	max-width: 400px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .room_info_id > p {
