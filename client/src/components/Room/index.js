@@ -43,7 +43,7 @@ export const Room = () => {
 
 	return (
 		<>
-			<div className="editor_container">
+			<div className="room_container">
 				<RoomInfo />
 				<textarea value={code} onChange={handleChange} />
 			</div>
