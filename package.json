@@ -1,8 +1,11 @@
 {
 	"name": "code_with_amiguitos",
-	"private": "true",
+	"private": true,
 	"version": "1.0.0",
 	"main": "index.js",
+	"engines": {
+		"npm": "7.20.0"
+	},
 	"workspaces": [
 		"client",
 		"server"
