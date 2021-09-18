@@ -4,6 +4,7 @@ import { useSocket } from '../../providers/SocketProvider';
 import { useClient } from '../../providers/ClientProvider';
 import { RoomInfo } from '../RoomInfo';
 import { Editor } from '../Editor';
+import { Preview } from '../Preview';
 
 export const Room = () => {
 	const [code, setCode] = useState('');
@@ -86,6 +87,7 @@ export const Room = () => {
 						forEditing="style"
 						onValueChange={{ sendData }}
 					/>
+					<Preview code={code} html={html} style={style} />
 				</div>
 			</div>
 		</>
