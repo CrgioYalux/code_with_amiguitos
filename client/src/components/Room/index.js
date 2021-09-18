@@ -5,11 +5,12 @@ import { useClient } from '../../providers/ClientProvider';
 import { RoomInfo } from '../RoomInfo';
 import { Editor } from '../Editor';
 import { Preview } from '../Preview';
+import { defaultCode, defaultHTML, defaultStyle } from './defaultEditorsValues';
 
 export const Room = () => {
-	const [code, setCode] = useState('');
-	const [html, setHTML] = useState('');
-	const [style, setStyle] = useState('');
+	const [code, setCode] = useState(defaultCode);
+	const [html, setHTML] = useState(defaultHTML);
+	const [style, setStyle] = useState(defaultStyle);
 	const { socket, id } = useSocket();
 	const { username } = useClient();
 
