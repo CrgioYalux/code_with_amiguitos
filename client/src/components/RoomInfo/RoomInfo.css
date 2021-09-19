@@ -35,61 +35,27 @@
 	color: var(--silver-sand);
 	background-color: var(--cod-gray);
 	padding: 2px 10px;
-	margin-left: 5px;
+	margin-left: 10px;
 	border-radius: 9px;
-	transition: background-color 0.1s;
-	text-align: center;
-	display: inline-block;
 	min-width: 200px;
 	max-width: 400px;
 	border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.room_info_id > p {
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow-x: hidden;
+	transition: background-color 0.2s;
+	text-align: center;
 }
 
 .room_info_id:hover {
 	background-color: var(--mine-shaft);
 }
 
-.copy_id_animation {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: transparent;
-	overflow: hidden;
-	border-radius: 9px;
-}
-
-.copy_id_animation::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	background-color: var(--blue-600);
-	border-radius: 9px;
-	opacity: 0.5;
-	animation: copied 0.4s;
-}
-
-@keyframes copied {
-	0% {
-		left: -100%;
-	}
-	100% {
-		left: 0;
-	}
-}
-
 .room_info_id:hover > .clipboard-icon {
 	display: block;
+}
+
+.room_info_id > p {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow-x: hidden;
 }
 
 .clipboard-icon {
@@ -99,4 +65,15 @@
 	bottom: -5px;
 	color: var(--blue-600);
 	display: none;
+}
+
+.copy_id_animation {
+	box-shadow: 0 0 0 0 var(--blue-600);
+	animation: pulse 0.4s;
+}
+
+@keyframes pulse {
+	to {
+		box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.05);
+	}
 }
