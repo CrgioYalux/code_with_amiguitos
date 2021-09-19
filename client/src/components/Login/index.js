@@ -43,14 +43,14 @@ export const Login = ({ onSubmit, state }) => {
 			<form onSubmit={handleSubmit} className="form_container">
 				<div className="form_field">
 					<label htmlFor="username" className="form_label">
-						Username:
+						Username
 					</label>
 					<input
 						name="username"
 						id="username"
 						value={username}
 						onChange={handleChangeUsername}
-						className="form_input"
+						className="form_input form_input_username"
 						type="text"
 						placeholder="Enter your username"
 						autoFocus
@@ -66,7 +66,7 @@ export const Login = ({ onSubmit, state }) => {
 				</div>
 				<div className="form_field">
 					<label htmlFor="roomID" className="form_label">
-						Room ID:
+						Room ID
 					</label>
 					<input
 						name="roomID"
