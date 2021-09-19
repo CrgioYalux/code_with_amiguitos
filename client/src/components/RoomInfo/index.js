@@ -20,11 +20,11 @@ export const RoomInfo = () => {
 		<div className="room_info_container">
 			<div className="room_info_id_container">
 				<p>Room ID</p>
-				<span onClick={handleClick} className="room_info_id">
+				<div onClick={handleClick} className="room_info_id">
 					<p>{roomID}</p>
 					<i className="clipboard-icon far fa-copy"></i>
 					<span ref={roomIDRef} className=""></span>
-				</span>
+				</div>
 			</div>
 			<ConnectedClients />
 		</div>
