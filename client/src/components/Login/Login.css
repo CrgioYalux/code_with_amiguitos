@@ -24,7 +24,7 @@
 .form_container {
 	width: 95vw;
 	max-width: 600px;
-	height: 45vh;
+	height: 35vh;
 	padding: 0 5px;
 	gap: 10px;
 	display: flex;
@@ -45,25 +45,26 @@
 	max-width: 550px;
 	border: 1px solid rgba(0, 0, 0, 1);
 	border-radius: 16px;
+	font-size: 1rem;
 }
 
 .form_label {
-	font-size: 1rem;
+	font-size: .9em;
 	text-align: center;
 	user-select: none;
 	color: rgba(0, 0, 0, 1);
-	width: 25%;
+	flex: 0 0 25%;
 }
 
 .form_input {
-	flex: 1 1 auto;
+	flex: 0 0 auto;
 	border-top: 0;
 	border-bottom: 0;
 	border-left: 1px solid transparent;
 	border-right: 1px solid transparent;
 	outline: 0;
 	padding: 5px 10px;
-	font-size: 1rem;
+	font-size: 1em;
 	background-color: transparent;
 	white-space: nowrap;
 	overflow-x: hidden;
@@ -74,21 +75,26 @@
 	border-left: 1px solid black;
 }
 
-.form_input_username:focus {
-	border-right: 1px solid black;
+.form_input:focus ~ .input_length {
+	top: -100%;
+	opacity: 1;
 }
 
 .input_length {
-	align-self: center;
-	width: 45px;
+	position: absolute;
+	top: 0;
+	opacity: 0;
+	right: 5px;
+	width: 50px;
 	height: 80%;
 	margin: 0 5px 0 5px;
 	border: 1px solid black;
 	border-radius: 99px;
-	font-size: 0.7rem;
-	font-weight: 600;
+	font-size: 0.8em;
+	font-weight: 700;
 	display: grid;
 	place-items: center;
+	transition: top .2s, opacity .2s;
 }
 
 .input_length-valid {
